@@ -1,54 +1,57 @@
-# React + TypeScript + Vite
+# Hooks Documentation
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## useDefault
 
-Currently, two official plugins are available:
+The `useDefault` hook manages a stateful value with a default fallback. It ensures that when the state is set to `null` or `undefined`, it falls back to a predefined default value.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### Usage
 
-## Expanding the ESLint configuration
+```tsx
+const initialUser = { name: "initial" };
+const defaultUser = { name: "Jane Doe" };
+const [user, setUser] = useDefault(initialUser, defaultUser);
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+// Example usage
+setUser(null); // Resets to defaultUser
+setUser({ name: "John Doe" }); // Updates to { name: "John Doe" }
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### Parameters
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+- `initialValue` (`T`): The initial value of the state.
+- `defaultValue` (`T`): The default value to fall back to when the state is `null` or `undefined`.
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+### Returns
+
+- `[T, (newValue: Nullable<T>) => void]`: A tuple containing the current value and a setter function.
+
+---
+
+## useDebounce
+
+The `useDebounce` hook delays the update of a value until after a specified delay has passed since the last time it was updated. This is useful for scenarios like search input where you want to wait for the user to stop typing before making a request.
+
+### Usage
+
+```tsx
+const debouncedValue = useDebounce(value, delay);
+
+// Example usage
+const [searchTerm, setSearchTerm] = useState("");
+const debouncedSearchTerm = useDebounce(searchTerm, 500);
+
+useEffect(() => {
+  if (debouncedSearchTerm) {
+    // Perform search
+  }
+}, [debouncedSearchTerm]);
 ```
+
+### Parameters
+
+- `value` (`T`): The value to debounce.
+- `delay` (`number`): The delay in milliseconds.
+
+### Returns
+
+- `T`: The debounced value.
