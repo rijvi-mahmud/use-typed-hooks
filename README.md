@@ -125,14 +125,14 @@ useIsomorphicEffect(() => {
 
 ---
 
-## useBoolean
+## [useBoolean](src/hooks/use-boolean.ts)
 
 The `useBoolean` hook provides a simple way to manage a boolean state with toggle functionality.
 
 ### Usage
 
 ```tsx
-const { value, toggle, setTrue, setFalse } = useBoolean(false);
+const [value, { toggle, setTrue, setFalse }] = useBoolean(false);
 
 // Example usage
 toggle(); // Toggles the value between true and false
@@ -150,7 +150,7 @@ setFalse(); // Sets the value to false
 
 ---
 
-## useClipboardCopy
+## [useClipboardCopy](src/hooks/use-clipboard-copy.ts)
 
 The `useClipboardCopy` hook provides a function to copy text to the clipboard and keeps track of the copied value.
 
