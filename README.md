@@ -1,6 +1,6 @@
 # Hooks Documentation
 
-## useDefault
+## [useDefault](src/hooks/use-default.ts)
 
 The `useDefault` hook manages a stateful value with a default fallback. It ensures that when the state is set to `null` or `undefined`, it falls back to a predefined default value.
 
@@ -27,7 +27,7 @@ setUser({ name: "John Doe" }); // Updates to { name: "John Doe" }
 
 ---
 
-## useDebounce
+## [useDebounce](src/hooks/use-debounce.ts)
 
 The `useDebounce` hook delays the update of a value until after a specified delay has passed since the last time it was updated. This is useful for scenarios like search input where you want to wait for the user to stop typing before making a request.
 
@@ -58,7 +58,7 @@ useEffect(() => {
 
 ---
 
-## useLocalStorage
+## [useLocalStorage](src/hooks/use-localStorage.ts)
 
 The `useLocalStorage` hook manages a value in the browser's `localStorage` with optional serialization and deserialization. It provides a way to persist state across sessions.
 
@@ -102,7 +102,7 @@ console.log(newValue); // Outputs: undefined
 
 ---
 
-## useIsomorphicEffect
+## [useIsomorphicEffect](src/hooks/use-isomorphic-effect.ts)
 
 The `useIsomorphicEffect` hook is a safe version of `useEffect` that works seamlessly on both the client and server. It falls back to `useEffect` on the server to avoid warnings.
 
