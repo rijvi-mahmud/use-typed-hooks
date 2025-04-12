@@ -132,7 +132,7 @@ The `useBoolean` hook provides a simple way to manage a boolean state with toggl
 ### Usage
 
 ```tsx
-const [value, { toggle, setTrue, setFalse }] = useBoolean(false);
+const { value, toggle, setTrue, setFalse } = useBoolean(false);
 
 // Example usage
 toggle(); // Toggles the value between true and false
