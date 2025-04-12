@@ -55,3 +55,70 @@ useEffect(() => {
 ### Returns
 
 - `T`: The debounced value.
+
+---
+
+## useLocalStorage
+
+The `useLocalStorage` hook manages a value in the browser's `localStorage` with optional serialization and deserialization. It provides a way to persist state across sessions.
+
+### Usage
+
+```tsx
+const [value, setValue, removeValue] = useLocalStorage("key", "defaultValue");
+
+// Example usage
+setValue("newValue"); // Updates the value in localStorage
+removeValue(); // Removes the value from localStorage
+```
+
+### Parameters
+
+- `key` (`string`): The key to store the value under in `localStorage`.
+- `initialValue` (`T | (() => T)`): The initial value or a function to compute it.
+- `options` (`UseLocalStorageOptions<T>`): Optional configuration for serialization, deserialization, and initialization.
+
+### Returns
+
+- `[T, Dispatch<SetStateAction<T>>, () => void]`: A tuple containing the stored value, a setter function, and a remover function.
+
+### Note
+
+If the `initialValue` is not provided, the hook will attempt to retrieve the value from `localStorage` if it already exists. If no value exists in `localStorage`, the returned value will be `undefined`.
+
+### Example
+
+```tsx
+// Assuming "key" already exists in localStorage with the value "storedValue"
+const [value, setValue, removeValue] = useLocalStorage("key");
+
+console.log(value); // Outputs: "storedValue"
+
+// If "key" does not exist in localStorage
+const [newValue] = useLocalStorage("newKey");
+
+console.log(newValue); // Outputs: undefined
+```
+
+---
+
+## useIsomorphicEffect
+
+The `useIsomorphicEffect` hook is a safe version of `useEffect` that works seamlessly on both the client and server. It falls back to `useEffect` on the server to avoid warnings.
+
+### Usage
+
+```tsx
+useIsomorphicEffect(() => {
+  // Your effect logic here
+}, [dependencies]);
+```
+
+### Parameters
+
+- `effect` (`EffectCallback`): The effect function to run.
+- `dependencies` (`DependencyList`): An array of dependencies for the effect.
+
+### Returns
+
+- `void`: This hook does not return anything.

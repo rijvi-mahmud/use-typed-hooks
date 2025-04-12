@@ -2,13 +2,12 @@ import { useState } from "react";
 import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import "./App.css";
-import { useDefault } from "./hooks/use-default";
+import { useLocalStorage } from "./hooks/use-localStorage";
 
 function App() {
-  const initialUser = { name: "initial" };
-  const defaultUser = { name: "Jane Doe" };
   const [count, setCount] = useState(0);
-  const [user, setUser] = useDefault(initialUser, defaultUser);
+
+  const [value, setValue, removeValue] = useLocalStorage("test-key");
 
   return (
     <>
@@ -32,19 +31,15 @@ function App() {
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
       </p>
+
       <div>
-        <h2>User Info</h2>
-        <p>Name: {user.name}</p>
-        <button onClick={() => setUser(null)}>Update User</button>
-        <button onClick={() => setUser({ name: "John Doe" })}>
-          Reset User
-        </button>
-        <button onClick={() => setUser({ name: "Jane Doe" })}>
-          Set Default User
-        </button>
-        <button onClick={() => setUser({ name: "Bob" })}>
-          Set User to Bob
-        </button>
+        <h1>useLocalStorage</h1>
+        <p>Value: {value}</p>
+        <button onClick={() => setValue(value + 1)}>Increment</button>
+        <button onClick={() => removeValue()}>Remove</button>
+        {/* <p>Value2: {value2}</p>
+        <button onClick={() => setValue2(value2 + 1)}>Increment</button>
+        <button onClick={() => removeValue2()}>Remove</button> */}
       </div>
     </>
   );
