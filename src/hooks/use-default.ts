@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
 
 /**
@@ -14,7 +15,7 @@ type Nullable<T> = T | null | undefined;
  * @returns {[T, (newValue: Nullable<T>) => void]} - A tuple containing the current value and a setter function.
  */
 
-export const useDefault = <T>(
+export const useDefault = <T = any>(
   initialValue: T,
   defaultValue: T
 ): [T, (newValue: Nullable<T>) => void] => {

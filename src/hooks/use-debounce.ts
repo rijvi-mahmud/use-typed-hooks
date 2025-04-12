@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from "react";
 
 /**
@@ -8,7 +9,7 @@ import { useEffect, useState } from "react";
  * @param {number} delay - The delay in milliseconds before updating the debounced value.
  * @returns {T} - The debounced value.
  */
-export const useDebounce = <T>(value: T, delay: number): T => {
+export const useDebounce = <T = any>(value: T, delay: number): T => {
   const [debouncedValue, setDebouncedValue] = useState<T>(value);
 
   useEffect(() => {
