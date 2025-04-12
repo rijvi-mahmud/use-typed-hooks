@@ -122,3 +122,58 @@ useIsomorphicEffect(() => {
 ### Returns
 
 - `void`: This hook does not return anything.
+
+---
+
+## useBoolean
+
+The `useBoolean` hook provides a simple way to manage a boolean state with toggle functionality.
+
+### Usage
+
+```tsx
+const [value, { toggle, setTrue, setFalse }] = useBoolean(false);
+
+// Example usage
+toggle(); // Toggles the value between true and false
+setTrue(); // Sets the value to true
+setFalse(); // Sets the value to false
+```
+
+### Parameters
+
+- `initialValue` (`boolean`): The initial value of the boolean state.
+
+### Returns
+
+- `[boolean, { toggle: () => void; setTrue: () => void; setFalse: () => void }]`: A tuple containing the current boolean value and an object with methods to toggle, set true, or set false.
+
+---
+
+## useClipboardCopy
+
+The `useClipboardCopy` hook provides a function to copy text to the clipboard and keeps track of the copied value.
+
+### Usage
+
+```tsx
+const [copiedText, copy] = useClipboardCopy();
+
+// Example usage
+copy("Hello, World!").then((success) => {
+  if (success) {
+    console.log("Copied successfully!");
+  } else {
+    console.log("Copy failed.");
+  }
+});
+```
+
+### Returns
+
+- `[CopiedValue, CopyFunc]`: A tuple containing the copied value and the `copy` function.
+
+### Notes
+
+- `CopiedValue` is a string or `null`.
+- `CopyFunc` is a function that takes a string and returns a promise resolving to a boolean indicating success or failure.
