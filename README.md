@@ -127,17 +127,20 @@ useIsomorphicEffect(() => {
 
 ## [useBoolean](src/hooks/use-boolean.ts)
 
-The `useBoolean` hook provides a simple way to manage a boolean state with toggle functionality.
+The `useBoolean` hook provides a simple way to manage a boolean state with toggle functionality and additional utility methods.
 
 ### Usage
 
 ```tsx
-const [value, { toggle, setTrue, setFalse }] = useBoolean(false);
+const [value, { toggle, setTrue, setFalse, reset, getValue }] =
+  useBoolean(false);
 
 // Example usage
 toggle(); // Toggles the value between true and false
 setTrue(); // Sets the value to true
 setFalse(); // Sets the value to false
+reset(); // Resets the value to the initial state
+const currentValue = getValue(); // Retrieves the current boolean value
 ```
 
 ### Parameters
@@ -146,7 +149,12 @@ setFalse(); // Sets the value to false
 
 ### Returns
 
-- `[boolean, { toggle: () => void; setTrue: () => void; setFalse: () => void }]`: A tuple containing the current boolean value and an object with methods to toggle, set true, or set false.
+- `[boolean, { toggle: () => void; setTrue: () => void; setFalse: () => void; reset: () => void; getValue: () => boolean; setValue: (value: boolean) => void }]`: A tuple containing the current boolean value and an object with methods to toggle, set true, set false, reset, get the current value, or set a specific value.
+
+### Notes
+
+- `reset` resets the state to its initial value.
+- `getValue` retrieves the current state value.
 
 ---
 

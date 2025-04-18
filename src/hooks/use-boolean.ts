@@ -1,13 +1,11 @@
 import { useCallback, useState } from "react";
 
 type BooleanHookReturnProps = {
-  value: boolean;
   setValue: (value: boolean) => void;
   toggle: () => void;
   setTrue: () => void;
   setFalse: () => void;
   reset: () => void;
-
   getValue: () => boolean;
 };
 
@@ -24,7 +22,7 @@ type BooleanHookReturnProps = {
  * - `getValue`: A function to retrieve the current state value.
  *
  * @example
- * const { value, toggle, setTrue, setFalse, reset, getValue } = useBoolean(false);
+ * const [value, { toggle, setTrue, setFalse, reset, getValue }] = useBoolean(false);
  *
  * // Usage examples:
  * toggle(); // Toggles the state
@@ -34,7 +32,10 @@ type BooleanHookReturnProps = {
  * const currentValue = getValue(); // Retrieves the current state value
  */
 
-export const useBoolean = (initialValue: boolean): BooleanHookReturnProps => {
+type useBooleanReturnType = [boolean, BooleanHookReturnProps];
+type UseBoolean = (initialValue: boolean) => useBooleanReturnType;
+
+export const useBoolean: UseBoolean = (initialValue) => {
   const [value, setValue] = useState(initialValue);
 
   const toggle = () => setValue((prev) => !prev);
@@ -44,5 +45,5 @@ export const useBoolean = (initialValue: boolean): BooleanHookReturnProps => {
 
   const reset = () => setValue(initialValue);
 
-  return { value, toggle, setTrue, setFalse, reset, getValue, setValue };
+  return [value, { toggle, setTrue, setFalse, reset, getValue, setValue }];
 };
