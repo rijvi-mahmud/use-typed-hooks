@@ -3,23 +3,33 @@ import { useIsomorphicEffect } from "./use-isomorphic-effect";
 
 /**
  * A custom hook that sets up an interval and executes a callback function at the specified delay.
+ * It also provides a function to manually stop the interval.
  *
  * @param callback - The function to be executed at each interval.
- * @param delay - The delay in milliseconds for the interval. If `null`, the interval is paused.
+ * @param delay - The delay in milliseconds for the interval. If `null`, the interval is paused and cleared.
+ * @returns An object containing a `stop` function to manually stop the interval.
  *
  * @example
- * useInterval(() => {
+ * const { stop } = useInterval(() => {
  *   console.log("This will run every second");
  * }, 1000);
  *
  * // To pause the interval:
- * useInterval(() => {
+ * const { stop } = useInterval(() => {
  *   console.log("This will not run");
  * }, null);
+ *
+ * // To stop the interval manually:
+ * stop();
  */
 
-export const useInterval = (callback: () => void, delay: number | null) => {
-  const savedCallback = useRef<() => void>(callback);
+type Callback = () => void;
+type Delay = number | null;
+type UseInterval = (callback: Callback, delay: Delay) => { stop: () => void };
+
+export const useInterval: UseInterval = (callback, delay) => {
+  const savedCallback = useRef<Callback>(callback);
+  const intervalId = useRef<number | null>(null);
 
   // Remember the latest callback.
   useIsomorphicEffect(() => {
@@ -34,8 +44,23 @@ export const useInterval = (callback: () => void, delay: number | null) => {
       }
     }
     if (delay !== null) {
-      const id = setInterval(tick, delay);
-      return () => clearInterval(id);
+      intervalId.current = setInterval(tick, delay);
+      return () => {
+        if (intervalId.current) {
+          clearInterval(intervalId.current);
+          intervalId.current = null;
+        }
+      };
     }
   }, [delay]);
+
+  // Function to stop the interval manually.
+  const stop = () => {
+    if (intervalId.current) {
+      clearInterval(intervalId.current);
+      intervalId.current = null;
+    }
+  };
+
+  return { stop };
 };

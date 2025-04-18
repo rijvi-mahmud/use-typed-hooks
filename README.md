@@ -182,12 +182,16 @@ copy("Hello, World!").then((success) => {
 
 ## [useInterval](src/hooks/use-interval.ts)
 
-The `useInterval` hook sets up an interval and executes a callback function at the specified delay.
+The `useInterval` hook sets up an interval and executes a callback function at the specified delay. It also provides a function to manually stop the interval.
 
 ### Parameters
 
 - `callback` - The function to be executed at each interval.
-- `delay` - The delay in milliseconds for the interval. If `null`, the interval is paused.
+- `delay` - The delay in milliseconds for the interval. If `null`, the interval is paused and cleared.
+
+### Returns
+
+- `{ stop: () => void }`: An object containing a `stop` function to manually stop the interval.
 
 ### Example
 
@@ -195,20 +199,32 @@ The `useInterval` hook sets up an interval and executes a callback function at t
 import { useInterval } from "./hooks/use-interval";
 
 function App() {
-  useInterval(() => {
+  const { stop } = useInterval(() => {
     console.log("This will run every second");
   }, 1000);
 
-  return <div>Check the console for interval logs.</div>;
+  return (
+    <div>
+      <button onClick={stop}>Stop Interval</button>
+      Check the console for interval logs.
+    </div>
+  );
 }
 
 // To pause the interval:
 useInterval(() => {
   console.log("This will not run");
 }, null);
+
+// To stop the interval manually:
+const { stop } = useInterval(() => {
+  console.log("This will run until stopped");
+}, 1000);
+stop();
 ```
 
 ### Notes
 
 - The `callback` function is always up-to-date with the latest state or props due to the use of `useRef`.
 - Setting `delay` to `null` will pause the interval.
+- Use the `stop` function to manually clear the interval.
