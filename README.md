@@ -177,3 +177,38 @@ copy("Hello, World!").then((success) => {
 
 - `CopiedValue` is a string or `null`.
 - `CopyFunc` is a function that takes a string and returns a promise resolving to a boolean indicating success or failure.
+
+---
+
+## [useInterval](src/hooks/use-interval.ts)
+
+The `useInterval` hook sets up an interval and executes a callback function at the specified delay.
+
+### Parameters
+
+- `callback` - The function to be executed at each interval.
+- `delay` - The delay in milliseconds for the interval. If `null`, the interval is paused.
+
+### Example
+
+```typescript
+import { useInterval } from "./hooks/use-interval";
+
+function App() {
+  useInterval(() => {
+    console.log("This will run every second");
+  }, 1000);
+
+  return <div>Check the console for interval logs.</div>;
+}
+
+// To pause the interval:
+useInterval(() => {
+  console.log("This will not run");
+}, null);
+```
+
+### Notes
+
+- The `callback` function is always up-to-date with the latest state or props due to the use of `useRef`.
+- Setting `delay` to `null` will pause the interval.
