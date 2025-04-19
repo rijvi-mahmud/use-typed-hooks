@@ -236,3 +236,48 @@ stop();
 - The `callback` function is always up-to-date with the latest state or props due to the use of `useRef`.
 - Setting `delay` to `null` will pause the interval.
 - Use the `stop` function to manually clear the interval.
+
+---
+
+## [useSessionStorage](src/hooks/use-session-storage.ts)
+
+The `useSessionStorage` hook manages a value in the browser's `sessionStorage` with optional serialization and deserialization. It provides a way to persist state across page reloads within the same session.
+
+### Usage
+
+```tsx
+const [value, setValue, removeValue] = useSessionStorage("key", "defaultValue");
+
+// Example usage
+setValue("newValue"); // Updates the value in sessionStorage
+removeValue(); // Removes the value from sessionStorage
+```
+
+### Parameters
+
+- `key` (`string`): The key to store the value under in `sessionStorage`.
+- `initialValue` (`T | (() => T)`): The initial value or a function to compute it.
+- `options` (`UseSessionStorageOptions<T>`): Optional configuration for serialization, deserialization, and initialization.
+
+### Returns
+
+- `[T, Dispatch<SetStateAction<T>>, () => void]`: A tuple containing the stored value, a setter function, and a remover function.
+
+### Notes
+
+- If the `initialValue` is not provided, the hook will attempt to retrieve the value from `sessionStorage` if it already exists. If no value exists in `sessionStorage`, the returned value will be `undefined`.
+- The `options` parameter allows customization of serialization and deserialization logic.
+
+### Example
+
+```tsx
+// Assuming "key" already exists in sessionStorage with the value "storedValue"
+const [value, setValue, removeValue] = useSessionStorage("key");
+
+console.log(value); // Outputs: "storedValue"
+
+// If "key" does not exist in sessionStorage
+const [newValue] = useSessionStorage("newKey");
+
+console.log(newValue); // Outputs: undefined
+```
