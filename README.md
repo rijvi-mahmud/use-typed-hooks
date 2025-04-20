@@ -281,3 +281,34 @@ const [newValue] = useSessionStorage("newKey");
 
 console.log(newValue); // Outputs: undefined
 ```
+
+---
+
+## [usePrevious](src/hooks/usePrevious.ts)
+
+The `usePrevious` hook retrieves the previous value of a state or prop. It is useful for comparing the current and previous values in a React component.
+
+### Usage
+
+```tsx
+const [count, setCount] = useState(0);
+const prevCount = usePrevious(count);
+
+useEffect(() => {
+  console.log("Current count:", count);
+  console.log("Previous count:", prevCount);
+}, [count]);
+```
+
+### Parameters
+
+- `value` (`T`): The current value to track.
+
+### Returns
+
+- `T | undefined`: The previous value of the tracked state or prop.
+
+### Notes
+
+- The initial previous value is `undefined`.
+- This hook is particularly useful for detecting changes in props or state.
