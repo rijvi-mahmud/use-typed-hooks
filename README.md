@@ -344,3 +344,45 @@ const Component = () => {
 
 - The hook initializes with `undefined` for both `width` and `height` until the first resize event or initial size calculation.
 - It automatically cleans up the event listener when the component unmounts.
+
+---
+
+## [useEventListener](src/hooks/use-event-listener.ts)
+
+The `useEventListener` hook adds an event listener to a specified element and ensures proper cleanup when the component unmounts or dependencies change.
+
+### Usage
+
+```tsx
+// Example 1: Add a click event listener to a specific element
+useEventListener(
+  "click",
+  (event) => console.log(event),
+  document.getElementById("myElement")
+);
+
+// Example 2: Add a resize event listener to the window
+useEventListener("resize", () => console.log("Window resized"));
+
+// Example 3: Add a keydown event listener to the document
+useEventListener(
+  "keydown",
+  (event) => console.log(`Key pressed: ${event.key}`),
+  document
+);
+```
+
+### Parameters
+
+- `eventName` (`string`): The name of the event to listen for.
+- `handler` (`EventListener`): The event handler function.
+- `element` (`Window | Document | HTMLElement | null`): The target element to attach the event listener to. Defaults to `window` if not provided.
+
+### Returns
+
+- `void`: This hook does not return anything.
+
+### Notes
+
+- Automatically cleans up the event listener when the component unmounts or dependencies change.
+- If no `element` is provided, the event listener is attached to the `window` object.
