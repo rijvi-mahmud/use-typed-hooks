@@ -317,7 +317,7 @@ useEffect(() => {
 
 ## [useWindowResize](src/hooks/use-window-resize.ts)
 
-The `useWindowResize` hook provides the current width and height of the browser window. It updates the values whenever the window is resized.
+The `useWindowResize` hook provides the current width and height of the browser window. It updates the values whenever the window is resized, with a debounce mechanism to optimize performance.
 
 ### Usage
 
@@ -336,14 +336,19 @@ const Component = () => {
 };
 ```
 
+### Parameters
+
+This hook does not take any parameters.
+
 ### Returns
 
 - `{ width: number | undefined, height: number | undefined }`: An object containing the current width and height of the window.
 
 ### Notes
 
-- The hook initializes with `undefined` for both `width` and `height` until the first resize event or initial size calculation.
-- It automatically cleans up the event listener when the component unmounts.
+- The hook initializes with `undefined` for both `width` and `height` if running on the server.
+- It uses a debounce mechanism (default delay: 200ms) to reduce the frequency of updates during rapid resize events.
+- Automatically cleans up the event listener when the component unmounts.
 
 ---
 
